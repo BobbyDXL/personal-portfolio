@@ -2,12 +2,13 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
-import { Home, User, Code, Mail, ChevronRight } from "lucide-react";
+import { Home, User, Code, Mail } from "lucide-react";
 
 export function NavigationPill() {
   const [isExpanded, setIsExpanded] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
 
+  // Track active section based on scroll
   useEffect(() => {
     const handleScroll = () => {
       const sections = document.querySelectorAll("section[id]");
@@ -44,23 +45,20 @@ export function NavigationPill() {
         onHoverEnd={() => setIsExpanded(false)}
         initial={false}
         animate={{
-          width: isExpanded ? "340px" : "200px",
+          backgroundColor: isExpanded 
+            ? "var(--nav-background)" 
+            : "var(--nav-background-collapsed)",
+          width: isExpanded ? "320px" : "200px",
         }}
         transition={{
-          type: "spring",
-          stiffness: 200,
-          damping: 25,
+          duration: 0.3,
+          ease: "easeInOut",
         }}
-        className="relative backdrop-blur-md rounded-full border border-primary/20 shadow-lg shadow-black/5 bg-white/80 dark:bg-black/80"
+        className="relative backdrop-blur-md rounded-full border border-primary/20 shadow-lg shadow-black/5"
       >
-        <ul className="flex items-center justify-between p-2 gap-2">
+        <ul className="flex items-center justify-between p-2 gap-1">
           {navItems.map(({ id, label, icon: Icon }) => (
-            <motion.li 
-              key={id} 
-              className="flex-1"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
+            <motion.li key={id} className="flex-1">
               <a
                 href={`#${id}`}
                 onClick={(e) => {
@@ -71,7 +69,7 @@ export function NavigationPill() {
                   setActiveSection(id);
                 }}
                 className={`
-                  relative flex items-center justify-center px-3 py-2 rounded-full 
+                  relative flex items-center justify-center p-2 rounded-full 
                   transition-colors duration-200 group
                   ${activeSection === id 
                     ? "text-primary bg-primary/10" 
@@ -79,29 +77,22 @@ export function NavigationPill() {
                   }
                 `}
               >
-                <Icon className="w-4 h-4 flex-shrink-0" />
+                <Icon className="w-5 h-5 flex-shrink-0" />
                 <AnimatePresence mode="wait">
                   {isExpanded && (
                     <motion.span
-                      initial={{ opacity: 0, x: -10 }}
+                      initial={{ opacity: 0, width: 0 }}
                       animate={{ 
                         opacity: 1, 
-                        x: 0,
-                        transition: { 
-                          type: "spring",
-                          stiffness: 200,
-                          damping: 20,
-                          delay: 0.1 
-                        }
+                        width: "auto",
+                        transition: { duration: 0.2, delay: 0.1 }
                       }}
                       exit={{ 
                         opacity: 0, 
-                        x: -10,
-                        transition: { 
-                          duration: 0.2 
-                        }
+                        width: 0,
+                        transition: { duration: 0.2 }
                       }}
-                      className="ml-2 text-sm font-medium overflow-hidden whitespace-nowrap"
+                      className="ml-2 whitespace-nowrap text-sm font-medium overflow-hidden"
                     >
                       {label}
                     </motion.span>
