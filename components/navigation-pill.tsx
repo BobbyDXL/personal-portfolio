@@ -65,7 +65,7 @@ export function NavigationPill() {
         }}
       >
         <nav className="backdrop-blur-md rounded-full bg-white/80 dark:bg-black/80 p-1.5">
-          <ul className="flex items-center gap-1">
+          <motion.ul className="flex items-center gap-1">
             {navItems.map(({ id, label, icon: Icon }) => (
               <motion.li
                 key={id}
@@ -124,7 +124,7 @@ export function NavigationPill() {
                 </motion.a>
               </motion.li>
             ))}
-          </ul>
+          </motion.ul>
           <motion.div 
             className="absolute inset-0 origin-left rounded-full -z-10 bg-primary/10"
             style={{ scaleX: scrollProgress / 100 }}
