@@ -5,6 +5,9 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { ThemeSwitch } from "@/components/theme-switcher";
 import { Suspense } from 'react';
 import { Loading } from '@/components/ui/loading';
+import { ScrollToTop } from "@/components/ui/scroll-to-top";
+import { CommandPalette } from "@/components/ui/command-palette";
+import { ToastProvider } from "@/components/ui/toast";
 
 const spaceGrotesk = Space_Grotesk({ 
   subsets: ["latin"],
@@ -31,7 +34,11 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Suspense fallback={<Loading />}>
-            {children}
+            <ToastProvider>
+              {children}
+              <ScrollToTop />
+              <CommandPalette />
+            </ToastProvider>
           </Suspense>
           <ThemeSwitch />
         </ThemeProvider>
