@@ -1,97 +1,147 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Shimmer } from "../ui/shimmer";
+import { ExternalLink, Github, ArrowRight } from "lucide-react";
+import Image from "next/image";
 
 export function Projects() {
   const projects = [
     {
       title: "EcoTrack Analytics",
       description: "A sustainable living dashboard that helps users track their carbon footprint through daily activities and provides personalized recommendations.",
+      image: "/projects/ecotrack.jpg",
       tech: ["React", "D3.js", "Node.js", "MongoDB"],
-      color: "from-teal-500/20 to-emerald-500/20",
-      image: "/projects/ecotrack.jpg"
+      github: "https://github.com",
+      demo: "https://demo.com",
+      color: "from-emerald-500 to-teal-500"
     },
     {
       title: "HealthHub Portal",
       description: "A healthcare management system that connects patients with healthcare providers, featuring real-time consultations and medical record tracking.",
+      image: "/projects/healthhub.jpg",
       tech: ["Next.js", "TypeScript", "Prisma", "PostgreSQL"],
-      color: "from-teal-500/20 to-cyan-500/20",
-      image: "/projects/healthhub.jpg"
+      github: "https://github.com",
+      demo: "https://demo.com",
+      color: "from-blue-500 to-violet-500"
     },
     {
       title: "SmartCity Dashboard",
       description: "An urban analytics platform that visualizes city data to help municipal authorities make data-driven decisions for better city management.",
+      image: "/projects/smartcity.jpg",
       tech: ["Vue.js", "Python", "TensorFlow", "AWS"],
-      color: "from-teal-500/20 to-blue-500/20",
-      image: "/projects/smartcity.jpg"
+      github: "https://github.com",
+      demo: "https://demo.com",
+      color: "from-orange-500 to-pink-500"
     }
   ];
 
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
-  };
-
-  const item = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0 }
-  };
-
   return (
-    <section id="projects" className="py-20">
-      <motion.h2
-        initial={{ opacity: 0, x: -20 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        className="text-3xl font-bold mb-8 relative inline-block"
-      >
-        Projects
-        <motion.div
-          className="absolute -bottom-2 left-0 w-full h-1 bg-primary"
-          initial={{ scaleX: 0 }}
-          whileInView={{ scaleX: 1 }}
-          transition={{ delay: 0.3 }}
-        />
-      </motion.h2>
-
+    <section id="projects" className="py-20 relative">
       <motion.div
-        variants={container}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true }}
-        className="grid grid-cols-1 md:grid-cols-2 gap-6"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+        className="container mx-auto px-4"
       >
-        {projects.map((project, index) => (
-          <motion.div
-            key={index}
-            variants={item}
-            whileHover={{ y: -5 }}
-            className={`relative p-6 rounded-xl overflow-hidden backdrop-blur-sm bg-gradient-to-br ${project.color}`}
+        <div className="max-w-6xl mx-auto">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-16"
           >
-            <div className="absolute inset-0 bg-grid-white/[0.02]" />
-            <div className="relative z-10">
-              <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-              <p className="text-muted-foreground mb-4">{project.description}</p>
-              <div className="flex gap-2 flex-wrap">
-                {project.tech.map((tech) => (
-                  <motion.span
-                    key={tech}
-                    whileHover={{ scale: 1.05 }}
-                    className="text-xs px-3 py-1.5 bg-white/10 rounded-full backdrop-blur-sm"
-                  >
-                    {tech}
-                  </motion.span>
-                ))}
-              </div>
-            </div>
-            <Shimmer className="group-hover:translate-x-0" />
+            <h2 className="text-4xl font-bold mb-4 gradient-text">Featured Projects</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Here are some of my recent projects that showcase my skills and experience
+            </p>
           </motion.div>
-        ))}
+
+          <div className="grid gap-8">
+            {projects.map((project, index) => (
+              <motion.div
+                key={project.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.2 }}
+                className="group relative rounded-2xl overflow-hidden border border-primary/20 bg-white/5 backdrop-blur-sm"
+              >
+                <div className="grid md:grid-cols-2 gap-8 p-8">
+                  <div className="space-y-4">
+                    <h3 className="text-2xl font-bold">{project.title}</h3>
+                    <p className="text-muted-foreground">{project.description}</p>
+                    
+                    <div className="flex flex-wrap gap-2">
+                      {project.tech.map((tech) => (
+                        <span
+                          key={tech}
+                          className="px-3 py-1 text-sm rounded-full bg-primary/10"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="flex items-center gap-4 pt-4">
+                      <motion.a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/10 hover:bg-primary/20 transition-colors"
+                      >
+                        <Github className="w-4 h-4" />
+                        <span>Code</span>
+                      </motion.a>
+                      <motion.a
+                        href={project.demo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-white hover:bg-primary/90 transition-colors"
+                      >
+                        <ExternalLink className="w-4 h-4" />
+                        <span>Live Demo</span>
+                      </motion.a>
+                    </div>
+                  </div>
+
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    className="relative aspect-video rounded-xl overflow-hidden"
+                  >
+                    <div className={`absolute inset-0 bg-gradient-to-r ${project.color} opacity-20`} />
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      className="object-cover"
+                    />
+                  </motion.div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+            className="text-center mt-12"
+          >
+            <motion.a
+              href="https://github.com/yourusername"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-primary hover:underline"
+              whileHover={{ x: 5 }}
+            >
+              View more projects on GitHub
+              <ArrowRight className="w-4 h-4" />
+            </motion.a>
+          </motion.div>
+        </div>
       </motion.div>
     </section>
   );

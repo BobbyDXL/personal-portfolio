@@ -3,6 +3,8 @@ import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ThemeSwitch } from "@/components/theme-switcher";
+import { Suspense } from 'react';
+import { Loading } from '@/components/ui/loading';
 
 const spaceGrotesk = Space_Grotesk({ 
   subsets: ["latin"],
@@ -28,7 +30,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <Suspense fallback={<Loading />}>
+            {children}
+          </Suspense>
           <ThemeSwitch />
         </ThemeProvider>
       </body>
